@@ -1,5 +1,10 @@
 const User = require('../models/user')
 
+module.exports.profile = function(req,res){
+    return res.render('index',{
+        title : "Completion"
+    })
+}
 
 module.exports.signIn = function(req,res){
     return res.render('sign_in',{
@@ -35,4 +40,27 @@ module.exports.create = function(req,res){
         }
     })
     
+}
+
+//SignIn and create s asession for the user
+module.exports.createSession = function(req,res){
+     //find the user
+     User.findOne({email : req.body.email},function(err,user){
+        if(err){console.log('errorin creating while the user in SignIn'); return;}
+        //handle user found
+        if(user){
+            //handlepassword which doesnot match
+            if(user.password != req.body.password){
+                // console.log("Password Note match");
+                return res.redirect('back');
+            }
+            //handle session creation
+            res.cookie('user_id',user.id);
+            // console.log("session created")
+            return res.redirect('/');  
+        }else{
+            //handle user not found
+            return res.redirect('back');
+        }
+    })
 }
