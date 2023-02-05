@@ -13,7 +13,7 @@ router.get('/home',UseController.home);
 router.use('/posts',require('./posts'))
 router.use('/comments',require('./comments'));
 
-router.post('/create',UseController.create);
+ router.post('/create',UseController.create);
 
 //use passport as a midddleware for authentication
 router.use('/craeteSession',passport.authenticate(

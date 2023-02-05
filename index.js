@@ -50,7 +50,7 @@ app.use(passport.setAuthenticatedUser)
 app.use(express.urlencoded());
 app.use(cookieParser());
 app.use(expressLayout);
-
+app.use(express.static('assest'));
 //use of express router
 app.use('/',require('./routes'));
 

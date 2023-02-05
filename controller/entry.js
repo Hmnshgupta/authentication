@@ -2,12 +2,16 @@ const User = require('../models/user')
 const Post = require('../models/post')
 
 module.exports.profile = function(req, res){
-    return res.render('index',{
-        title: 'My Profile Page'
-    });
-}
+    User.findById(req.params.id, function(err,user){
+        return res.render('index',{
+            title: 'My Profile Page',
+            
+        });
+    })
+ }
+   
 
-module.exports.home = function(req,res){
+module.exports.home = async function(req,res){
     // Post.find({},function(err,posts){
     //     return res.render('home',{
     //         title : 'MY  Codial Home Page',
@@ -16,19 +20,36 @@ module.exports.home = function(req,res){
     // })
 
     //Population the usr name on WEb page
-    Post.find({}).populate('user')
-    .populate({
-        path : 'comments',
-        populate : {
-            path : 'user'
-        }
-    })
-    .exec(function(err,posts){
-        return res.render('home',{
-            title : 'MY  Codial Home Page',
-            posts : posts
-        });
-    })
+    try{
+        let post = await Post.find({})
+            .sort('-createdAt')
+            .populate('user')
+            .populate({
+                path : 'comments',
+                populate : {
+                    path : 'user'
+
+                }
+            })
+    
+
+       let user = await User.find({});
+            return res.render('home',{
+                title : 'MY  Codial Home Page',
+                posts : post
+                
+                
+            });
+
+    }catch(err){
+        console.log('Error',err)
+        return;
+    }
+   
+        
+
+      
+    
    
 }
 

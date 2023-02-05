@@ -1,6 +1,9 @@
 const mongoose = require('mongoose');
-mongoose.connect("mongodb+srv://DatabaseRelation:9IZAAYq2zX65EiRk@cluster0.ficu19y.mongodb.net/?retryWrites=true&w=majority");
+// mongoose.connect("mongodb+srv://himanshu:Himanshu@cluster0.aijdqcn.mongodb.net/test");
+mongoose.connect("mongodb://127.0.0.1:27017")
 const db = mongoose.connection;
+mongoose.set('strictQuery', true);
+
 
 db.on('error',console.error.bind('console','We did something wrong'));
 
